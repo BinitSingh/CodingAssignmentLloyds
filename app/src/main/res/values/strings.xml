@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">CodingAssignmentLloyds</string>
+
+    <string name="year">Release Year : %1$s</string>
+    <string name="crew">Crew : %1$s</string>
+    <string name="imdb_rating">IMDB Rating : %1$s </string>
+</resources>
