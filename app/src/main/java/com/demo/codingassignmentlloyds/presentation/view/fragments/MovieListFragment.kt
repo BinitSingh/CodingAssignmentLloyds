@@ -33,7 +33,7 @@ class MovieListFragment : Fragment() {
         findNavController().navigate(
             R.id.action_show_moviedetail,
             Bundle().apply {
-                putString(Constant.MOVIE_ID, movie.id)
+                putParcelable(Constant.MOVIE, movie)
             })
     }
 

@@ -1,6 +1,5 @@
 package com.demo.codingassignmentlloyds.data.webservice
 
-import com.demo.codingassignmentlloyds.data.model.MovieDetailResponse
 import com.demo.codingassignmentlloyds.data.model.MovieItemsListResponse
 import com.demo.codingassignmentlloyds.data.model.WebServiceResponse
 import kotlinx.coroutines.Dispatchers
@@ -13,11 +12,9 @@ import java.io.IOException
 import javax.inject.Inject
 
 class ApiCallsImpl @Inject constructor(private val client: RetrofitClient): IApiCalls {
+
     override suspend fun getMovieList(): Flow<WebServiceResponse<MovieItemsListResponse>> =
         performNetworkApiCall { client.getMovieList() }
-
-    override suspend fun getMovieDetail(id: String?): Flow<WebServiceResponse<MovieDetailResponse>> =
-        performNetworkApiCall { client.getMovieDetailResponse(movieId = id) }
 
 
     private suspend fun <T : Any> performNetworkApiCall(
