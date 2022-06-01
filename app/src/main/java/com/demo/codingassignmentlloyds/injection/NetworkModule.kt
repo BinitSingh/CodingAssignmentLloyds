@@ -48,7 +48,7 @@ object NetworkModule {
     fun provideMoshiConverterFactory(): MoshiConverterFactory = MoshiConverterFactory.create()
 
     /**
-     * Returns an instance of the [ApiService] interface for the retrofit class
+     * Returns an instance of the [RetrofitClient] interface for the retrofit class
      */
     @Provides
     fun provideRetrofitClient(

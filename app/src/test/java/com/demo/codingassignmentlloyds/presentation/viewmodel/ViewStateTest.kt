@@ -16,8 +16,8 @@ class ViewStateTest {
 
     @Test
     fun testSuccessViewState(){
-        val artist = mockk<MovieItemsListResponse>()
-        val success = ViewState.Success(artist)
+        val movieItemsListResponse = mockk<MovieItemsListResponse>()
+        val success = ViewState.Success(movieItemsListResponse)
         Assert.assertTrue(success is ViewState.Success)
     }
 

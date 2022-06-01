@@ -29,7 +29,7 @@ class MovieListFragment : Fragment() {
     @Inject
     lateinit var movieAdaptor: MovieListAdaptor
 
-    private val topArtistItemClickListener: MovieClickListener = { movie ->
+    private val itemClickListener: MovieClickListener = { movie ->
         findNavController().navigate(
             R.id.action_show_moviedetail,
             Bundle().apply {
@@ -52,27 +52,6 @@ class MovieListFragment : Fragment() {
             rvMovie.addItemDecoration(
                 ItemDecoration(resources.getDimension(R.dimen.dimen_16dp).toInt())
             )
-//            viewModel.getMovieLiveData().observe(viewLifecycleOwner) { viewState ->
-//                when (viewState) {
-//                    is ViewState.Loading -> {
-//                        progressBar.visibility =
-//                                if (viewState.isLoading) View.VISIBLE else View.GONE
-//                    }
-//                    is ViewState.Failure -> {
-//                        viewState.throwable.message?.let {
-//                                Toast.makeText(context, it, Toast.LENGTH_SHORT).show()
-//                            }
-//                    }
-//                    is ViewState.Success -> {
-//                        val data = viewState.output
-//                        with(movieAdaptor){
-//                            itemList = data.subList(0,5)
-//                            rvMovie.adapter = this
-//                            listner = topArtistItemClickListener
-//                        }
-//                    }
-//                }
-//            }
 
             lifecycleScope.launchWhenStarted {
                 viewModel.getViewStateFlow().collect { viewState ->
@@ -90,7 +69,7 @@ class MovieListFragment : Fragment() {
                             val data = viewState.output
                             with(movieAdaptor){
                                 rvMovie.adapter = this
-                                listner = topArtistItemClickListener
+                                listner = itemClickListener
                                 itemList = data
                             }
                         }

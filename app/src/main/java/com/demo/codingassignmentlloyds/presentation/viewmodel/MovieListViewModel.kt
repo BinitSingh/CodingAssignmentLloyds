@@ -29,8 +29,8 @@ class MovieListViewModel @Inject constructor(
                     is ViewState.Loading -> _stateFlow.value = it
                     is ViewState.Failure -> _stateFlow.value = it
                     is ViewState.Success -> {
-                        it.output.let { artists ->
-                            _stateFlow.value = ViewState.Success(artists)
+                        it.output.let { movies ->
+                            _stateFlow.value = ViewState.Success(movies)
                         }
                     }
                 }

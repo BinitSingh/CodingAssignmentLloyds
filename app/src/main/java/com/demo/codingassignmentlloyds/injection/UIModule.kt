@@ -11,7 +11,7 @@ import dagger.hilt.android.components.FragmentComponent
 object UIModule {
 
     @Provides
-    fun provideTopArtistAdapter(): MovieListAdaptor{
+    fun provideMovieListAdaptor(): MovieListAdaptor{
         return MovieListAdaptor()
     }
 

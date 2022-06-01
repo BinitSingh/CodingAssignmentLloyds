@@ -59,13 +59,13 @@ class MovieListViewModelTest {
     @Test
     fun fetchMovieListError(){
         runBlockingTest {
-            val topArtistList: ArrayList<Movie> = mockk()
+            val movieList: ArrayList<Movie> = mockk()
             coEvery { mockUseCase() } returns fakeSuccessFlow
             viewModel.fetchMovieList()
 
             verifyOrder {
                 viewStateObserver.onChanged(ViewState.Loading(true))
-                viewStateObserver.onChanged(ViewState.Success(topArtistList))
+                viewStateObserver.onChanged(ViewState.Success(movieList))
                 viewStateObserver.onChanged(ViewState.Loading(false))
             }
         }
