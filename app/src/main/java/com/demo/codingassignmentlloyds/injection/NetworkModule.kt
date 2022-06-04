@@ -1,27 +1,30 @@
 package com.demo.codingassignmentlloyds.injection
 
 import com.demo.codingassignmentlloyds.BuildConfig
-import com.demo.codingassignmentlloyds.data.webservice.ApiCallsImpl
-import com.demo.codingassignmentlloyds.data.webservice.IApiCalls
-import com.demo.codingassignmentlloyds.data.webservice.RetrofitClient
+import com.demo.codingassignmentlloyds.data.webservice.RemoteDataSource
+import com.demo.codingassignmentlloyds.data.webservice.IDataSource
+import com.demo.codingassignmentlloyds.data.webservice.MovieApi
+import com.demo.codingassignmentlloyds.dispatcher.CoroutinesDispatchers
+import com.demo.codingassignmentlloyds.dispatcher.CustomCoroutinesDispatchers
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
+import kotlinx.coroutines.CoroutineDispatcher
+import kotlinx.coroutines.Dispatchers
+import okhttp3.Interceptor
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory
-import java.util.concurrent.TimeUnit
+import java.util.concurrent.TimeUnit.SECONDS
 
 @Module
 @InstallIn(SingletonComponent::class)
 object NetworkModule {
-    /**
-     * Provides [HttpLoggingInterceptor] instance with logging level set to body
-     */
+
     @Provides
-    fun provideLoggingInterceptor() = HttpLoggingInterceptor().apply {
+    fun provideInterceptor(): Interceptor = HttpLoggingInterceptor().apply {
         level = HttpLoggingInterceptor.Level.BODY
     }
 
@@ -30,13 +33,13 @@ object NetworkModule {
      * @param loggingInterceptor [HttpLoggingInterceptor] instance
      */
     @Provides
-    fun provideOKHttpClient(loggingInterceptor: HttpLoggingInterceptor) = OkHttpClient().apply {
+    fun provideOKHttpClient(interceptor: Interceptor) = OkHttpClient().apply {
         OkHttpClient.Builder().apply {
-            callTimeout(40, TimeUnit.SECONDS)
-            connectTimeout(40, TimeUnit.SECONDS)
-            readTimeout(40, TimeUnit.SECONDS)
-            writeTimeout(40, TimeUnit.SECONDS)
-            addInterceptor(loggingInterceptor)
+            callTimeout(40, SECONDS)
+            connectTimeout(40, SECONDS)
+            readTimeout(40, SECONDS)
+            writeTimeout(40, SECONDS)
+            addInterceptor(interceptor)
             build()
         }
     }
@@ -48,24 +51,30 @@ object NetworkModule {
     fun provideMoshiConverterFactory(): MoshiConverterFactory = MoshiConverterFactory.create()
 
     /**
-     * Returns an instance of the [RetrofitClient] interface for the retrofit class
+     * Returns an instance of the [MovieApi] interface for the retrofit class
      */
     @Provides
     fun provideRetrofitClient(
         okHttpClient: OkHttpClient,
         moshiConverterFactory: MoshiConverterFactory,
-    ): RetrofitClient =
+    ): Retrofit =
         Retrofit.Builder()
             .baseUrl(BuildConfig.BASE_URL)
             .client(okHttpClient)
             .addConverterFactory(moshiConverterFactory)
-            .build().run {
-                create(RetrofitClient::class.java)
-            }
+            .build()
+
+    @Provides
+    fun provideMovieApi(retrofit: Retrofit): MovieApi =
+        retrofit.create(MovieApi::class.java)
+
+    @Provides
+    fun provideCouroutineDispatcher(): CoroutinesDispatchers = CustomCoroutinesDispatchers()
 
     /**
-     * Returns a [IApiCalls] impl -> ApiCallsImpl
+     * Returns a [IDataSource] impl -> ApiCallsImpl
      */
     @Provides
-    fun provideRetrofitService(retrofit: RetrofitClient): IApiCalls = ApiCallsImpl(retrofit)
+    fun provideRemoteDataSource(retrofit: MovieApi, dispatcher: CoroutinesDispatchers): IDataSource
+    = RemoteDataSource(retrofit, dispatcher)
 }

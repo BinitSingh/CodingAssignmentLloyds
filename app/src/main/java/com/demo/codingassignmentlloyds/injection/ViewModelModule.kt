@@ -1,7 +1,7 @@
 package com.llyods.assignment.di
 
 import com.demo.codingassignmentlloyds.data.repository.MovieRepositoryImpl
-import com.demo.codingassignmentlloyds.data.webservice.IApiCalls
+import com.demo.codingassignmentlloyds.data.webservice.IDataSource
 import com.demo.codingassignmentlloyds.domain.usecase.MovieListUseCase
 import dagger.Module
 import dagger.Provides
@@ -16,7 +16,7 @@ object ViewModelModule {
      * Returns a [MovieRepositoryImpl] instance
      */
     @Provides
-    fun provideMovieRepository(webService: IApiCalls): MovieRepositoryImpl =
+    fun provideMovieRepository(webService: IDataSource): MovieRepositoryImpl =
         MovieRepositoryImpl(webService)
 
     /**

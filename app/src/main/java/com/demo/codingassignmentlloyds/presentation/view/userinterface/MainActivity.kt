@@ -1,8 +1,7 @@
-package com.demo.codingassignmentlloyds.presentation.view.activities
+package com.demo.codingassignmentlloyds.presentation.view.userinterface
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import com.demo.codingassignmentlloyds.R
 import com.demo.codingassignmentlloyds.databinding.ActivityMainBinding
 import dagger.hilt.android.AndroidEntryPoint
 

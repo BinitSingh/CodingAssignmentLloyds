@@ -1,10 +1,10 @@
 package com.demo.codingassignmentlloyds.presentation.viewmodel
 
 import com.demo.codingassignmentlloyds.data.model.MovieItemsListResponse
+import com.demo.codingassignmentlloyds.presentation.ViewState
 import io.mockk.mockk
 import org.junit.Assert
 import org.junit.Test
-import java.io.IOException
 
 
 class ViewStateTest {

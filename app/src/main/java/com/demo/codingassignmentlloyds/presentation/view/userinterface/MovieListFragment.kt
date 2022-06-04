@@ -1,11 +1,10 @@
-package com.demo.codingassignmentlloyds.presentation.view.fragments
+package com.demo.codingassignmentlloyds.presentation.view.userinterface
 
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
-import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
@@ -14,15 +13,16 @@ import com.demo.codingassignmentlloyds.databinding.FragmentMovieListBinding
 import com.demo.codingassignmentlloyds.presentation.view.adapter.MovieClickListener
 import com.demo.codingassignmentlloyds.presentation.view.adapter.MovieListAdaptor
 import com.demo.codingassignmentlloyds.presentation.viewmodel.MovieListViewModel
-import com.demo.codingassignmentlloyds.presentation.viewmodel.ViewState
-import com.demo.codingassignmentlloyds.utility.Constant
+import com.demo.codingassignmentlloyds.presentation.ViewState
 import com.demo.codingassignmentlloyds.utility.ItemDecoration
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collect
 import javax.inject.Inject
 
+
+const val MOVIE = "movie"
 @AndroidEntryPoint
-class MovieListFragment : Fragment() {
+class MovieListFragment : BaseFragment() {
     private lateinit var binding: FragmentMovieListBinding
     private val viewModel: MovieListViewModel by viewModels()
 
@@ -33,7 +33,7 @@ class MovieListFragment : Fragment() {
         findNavController().navigate(
             R.id.action_show_moviedetail,
             Bundle().apply {
-                putParcelable(Constant.MOVIE, movie)
+                putParcelable(MOVIE, movie)
             })
     }
 
@@ -48,6 +48,7 @@ class MovieListFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        viewModel.fetchMovieList()
         with(binding){
             rvMovie.addItemDecoration(
                 ItemDecoration(resources.getDimension(R.dimen.dimen_16dp).toInt())
@@ -57,8 +58,7 @@ class MovieListFragment : Fragment() {
                 viewModel.getViewStateFlow().collect { viewState ->
                     when (viewState) {
                         is ViewState.Loading -> {
-                            progressBar.visibility =
-                                if (viewState.isLoading) View.VISIBLE else View.GONE
+                            showHideProgressBar(progressBar, viewState.isLoading)
                         }
                         is ViewState.Failure -> {
                             viewState.throwable.message?.let {
@@ -66,18 +66,16 @@ class MovieListFragment : Fragment() {
                             }
                         }
                         is ViewState.Success -> {
-                            val data = viewState.output
                             with(movieAdaptor){
                                 rvMovie.adapter = this
                                 listner = itemClickListener
-                                itemList = data
+                                dataSet = viewState.result
                             }
                         }
                     }
                 }
             }
         }
-        viewModel.fetchMovieList()
     }
 
 }

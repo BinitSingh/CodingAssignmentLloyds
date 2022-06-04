@@ -9,11 +9,8 @@ import dagger.hilt.android.components.FragmentComponent
 @Module
 @InstallIn(FragmentComponent::class)
 object UIModule {
-
     @Provides
     fun provideMovieListAdaptor(): MovieListAdaptor{
         return MovieListAdaptor()
     }
-
-
 }

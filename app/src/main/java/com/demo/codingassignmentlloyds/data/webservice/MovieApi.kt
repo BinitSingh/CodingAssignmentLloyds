@@ -5,10 +5,9 @@ import retrofit2.http.GET
 import retrofit2.http.Path
 import retrofit2.Response
 
-interface RetrofitClient {
+interface MovieApi {
     @GET("/API/MostPopularMovies/{api_key}")
-    suspend fun getMovieList(
+    suspend fun fetchMovieList(
         @Path("api_key") key: String = BuildConfig.API_KEY
     ): Response<MovieItemsListResponse>
-
 }

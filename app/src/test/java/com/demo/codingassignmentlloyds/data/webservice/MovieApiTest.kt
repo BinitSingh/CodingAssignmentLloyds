@@ -15,7 +15,7 @@ import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory
 import java.io.IOException
 
-class RetrofitClientTest {
+class MovieApiTest {
     lateinit var mockWebServer: MockWebServer
     @get:Rule
     var mainCoroutineRule = TestCoroutineRule()
@@ -24,7 +24,7 @@ class RetrofitClientTest {
     @get:Rule
     var instantExecutorRule = InstantTaskExecutorRule()
 
-    private lateinit var webClient: RetrofitClient
+    private lateinit var webClient: MovieApi
 
     @Before
     fun initService(){
@@ -38,7 +38,7 @@ class RetrofitClientTest {
             .addConverterFactory(MoshiConverterFactory.create(moshi))
             .addCallAdapterFactory(CoroutineCallAdapterFactory())
             .build()
-            .create(RetrofitClient::class.java)
+            .create(MovieApi::class.java)
     }
 
     @After

@@ -1,4 +1,4 @@
-package com.demo.codingassignmentlloyds.presentation.viewmodel
+package com.demo.codingassignmentlloyds.presentation
 
 
 sealed class ViewState<out T : Any> {
@@ -14,7 +14,7 @@ sealed class ViewState<out T : Any> {
      * of type [T] has been provided to UI
      * @param output result object of [T] type representing the successful operation
      */
-    data class Success<out T : Any>(val output: T) : ViewState<T>()
+    data class Success<out T : Any>(val result: T) : ViewState<T>()
 
     /**
      * Represents the UI state where the operation requested by the UI has failed to complete

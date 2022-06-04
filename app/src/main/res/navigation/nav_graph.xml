@@ -6,7 +6,7 @@
 
     <fragment
         android:id="@+id/movieListFragment"
-        android:name="com.demo.codingassignmentlloyds.presentation.view.fragments.MovieListFragment"
+        android:name="com.demo.codingassignmentlloyds.presentation.view.userinterface.MovieListFragment"
         android:label="MovieList" >
         <action
             android:id="@+id/action_show_moviedetail"
@@ -14,6 +14,6 @@
     </fragment>
     <fragment
         android:id="@+id/movieDetailFragment"
-        android:name="com.demo.codingassignmentlloyds.presentation.view.fragments.MovieDetailFragment"
+        android:name="com.demo.codingassignmentlloyds.presentation.view.userinterface.MovieDetailFragment"
         android:label="MovieDetailFragment" />
 </navigation>

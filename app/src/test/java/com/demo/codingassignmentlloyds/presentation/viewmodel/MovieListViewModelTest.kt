@@ -3,6 +3,7 @@ package com.demo.codingassignmentlloyds.presentation.viewmodel
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.lifecycle.Observer
 import com.demo.codingassignmentlloyds.TestCoroutineRule
+import com.demo.codingassignmentlloyds.presentation.ViewState
 import com.demo.codingassignmentlloyds.data.model.WebServiceResponse
 import com.demo.codingassignmentlloyds.domain.datamodel.Movie
 import com.demo.codingassignmentlloyds.domain.usecase.MovieListUseCase

@@ -14,11 +14,9 @@ class MovieViewHolder(
 ) : RecyclerView.ViewHolder(binding.root) {
 
     fun bind(movie: Movie) {
-//        binding.name.text = movie.title
         with(binding) {
             movie.image?.let { imgMovie.loadImageOrDefault(it) }
             txtName.text = movie.title
-
             movie.year?.let {
                 txtYear.text = String.format(context.getString(R.string.year), it)
             }

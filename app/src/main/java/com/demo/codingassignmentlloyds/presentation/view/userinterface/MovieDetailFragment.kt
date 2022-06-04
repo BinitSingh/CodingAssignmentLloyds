@@ -1,21 +1,15 @@
-package com.demo.codingassignmentlloyds.presentation.view.fragments
+package com.demo.codingassignmentlloyds.presentation.view.userinterface
 
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
-import androidx.fragment.app.Fragment
-import androidx.lifecycle.lifecycleScope
 import com.demo.codingassignmentlloyds.databinding.FragmentMovieDetailBinding
 import com.demo.codingassignmentlloyds.domain.datamodel.Movie
-import com.demo.codingassignmentlloyds.presentation.viewmodel.ViewState
-import com.demo.codingassignmentlloyds.utility.Constant
 import com.demo.codingassignmentlloyds.utility.loadImageOrDefault
-import kotlinx.coroutines.flow.collect
 
-class MovieDetailFragment : Fragment() {
+class MovieDetailFragment : BaseFragment() {
     private val TAG = MovieDetailFragment::class.java.canonicalName
     private lateinit var binding: FragmentMovieDetailBinding
 
@@ -30,7 +24,7 @@ class MovieDetailFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        arguments?.getParcelable<Movie>(Constant.MOVIE)?.let {
+        arguments?.getParcelable<Movie>(MOVIE)?.let {
             renderUi(it)
         }?: run {
             Log.e(TAG,"Failed to load movie")

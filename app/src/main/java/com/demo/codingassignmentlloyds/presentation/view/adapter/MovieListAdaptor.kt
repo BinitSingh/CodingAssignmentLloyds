@@ -15,7 +15,7 @@ class MovieListAdaptor @Inject constructor() : RecyclerView.Adapter<MovieViewHol
 
     lateinit var listner: MovieClickListener
 
-    var itemList: List<Movie> by Delegates.observable(emptyList()) { _, _, _ ->
+    var dataSet: List<Movie> by Delegates.observable(emptyList()) { _, _, _ ->
         notifyDataSetChanged()
     }
 
@@ -25,14 +25,14 @@ class MovieListAdaptor @Inject constructor() : RecyclerView.Adapter<MovieViewHol
         )
 
     override fun onBindViewHolder(holder: MovieViewHolder, position: Int) {
-        val movie = itemList[position]
+        val movie = dataSet[position]
         holder.bind(movie)
         holder.itemView.setOnClickListener {
             listner.invoke(movie)
         }
     }
 
-    override fun getItemCount() = itemList.size
+    override fun getItemCount() = dataSet.size
 
 
 }
