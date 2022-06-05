@@ -16,26 +16,10 @@ import dagger.hilt.android.components.ViewModelComponent
 
 @Module
 @InstallIn(ViewModelComponent::class)
-object ViewModelModule {
+object EntityMapperModule {
 
-    /**
-     * Returns a [MovieRepositoryImpl] instance
-     */
     @Provides
-    fun provideMovieRepository(webService: IDataSource): MovieRepositoryImpl =
-        MovieRepositoryImpl(webService)
-
-    /**
-     * Returns a [MovieListUseCase] instance
-     */
-    @Provides
-    fun provideMovieListUseCase(
-        repository: MovieRepositoryImpl,
-        dispatcher: CoroutinesDispatchers,
-        @MovieListMappingAnnotation
-        mapper: EntityMapper<MovieItemsListResponse, List<Movie>>
-    ): MovieListUseCase = MovieListUseCase(repository, dispatcher, mapper)
-
-
-
+    @MovieListMappingAnnotation
+    fun provideEntityMapper(): EntityMapper<MovieItemsListResponse, List<Movie>> =
+        MovieListMapper()
 }
