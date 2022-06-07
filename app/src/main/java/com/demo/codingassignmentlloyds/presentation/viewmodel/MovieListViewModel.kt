@@ -2,7 +2,6 @@ package com.demo.codingassignmentlloyds.presentation.viewmodel
 
 import androidx.lifecycle.viewModelScope
 import com.demo.codingassignmentlloyds.dispatcher.CoroutinesDispatchers
-import com.demo.codingassignmentlloyds.dispatcher.CustomCoroutinesDispatchers
 import com.demo.codingassignmentlloyds.presentation.ViewState
 import com.demo.codingassignmentlloyds.presentation.ViewState.Loading
 import com.demo.codingassignmentlloyds.presentation.ViewState.Success

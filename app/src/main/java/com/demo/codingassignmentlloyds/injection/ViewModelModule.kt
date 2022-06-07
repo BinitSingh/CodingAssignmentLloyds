@@ -1,6 +1,5 @@
 package com.llyods.assignment.di
 
-import com.demo.codingassignmentlloyds.data.datamapper.MovieListMapper
 import com.demo.codingassignmentlloyds.data.model.MovieItemsListResponse
 import com.demo.codingassignmentlloyds.data.repository.MovieRepositoryImpl
 import com.demo.codingassignmentlloyds.data.webservice.IDataSource
@@ -18,16 +17,10 @@ import dagger.hilt.android.components.ViewModelComponent
 @InstallIn(ViewModelComponent::class)
 object ViewModelModule {
 
-    /**
-     * Returns a [MovieRepositoryImpl] instance
-     */
     @Provides
-    fun provideMovieRepository(webService: IDataSource): MovieRepositoryImpl =
-        MovieRepositoryImpl(webService)
+    fun provideMovieRepository(dataSource: IDataSource): MovieRepositoryImpl =
+        MovieRepositoryImpl(dataSource)
 
-    /**
-     * Returns a [MovieListUseCase] instance
-     */
     @Provides
     fun provideMovieListUseCase(
         repository: MovieRepositoryImpl,

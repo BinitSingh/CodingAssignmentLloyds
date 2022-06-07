@@ -5,10 +5,12 @@ import androidx.lifecycle.Observer
 import com.demo.codingassignmentlloyds.TestCoroutineRule
 import com.demo.codingassignmentlloyds.presentation.ViewState
 import com.demo.codingassignmentlloyds.data.model.WebServiceResponse
+import com.demo.codingassignmentlloyds.dispatcher.CoroutinesDispatchers
 import com.demo.codingassignmentlloyds.domain.datamodel.Movie
 import com.demo.codingassignmentlloyds.domain.usecase.MovieListUseCase
 import io.mockk.*
 import io.mockk.impl.annotations.RelaxedMockK
+import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.test.runBlockingTest
@@ -39,6 +41,9 @@ class MovieListViewModelTest {
     @RelaxedMockK
     private lateinit var mockUseCase: MovieListUseCase
 
+    @RelaxedMockK
+    private lateinit var dispatcher: CoroutinesDispatchers
+
     private val fakeSuccessFlow = flow {
         emit(WebServiceResponse.OnSuccess(mockMovieList))
     }
@@ -54,7 +59,7 @@ class MovieListViewModelTest {
     fun setUp(){
         MockKAnnotations.init(this)
         every { mockException.message } returns "Exception!!"
-        viewModel = MovieListViewModel(mockUseCase)
+        viewModel = MovieListViewModel(mockUseCase, dispatcher)
     }
 
     @Test

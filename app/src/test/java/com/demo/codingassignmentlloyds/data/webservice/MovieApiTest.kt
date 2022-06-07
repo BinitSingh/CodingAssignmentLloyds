@@ -60,7 +60,7 @@ class MovieApiTest {
     fun TestMovieListFromServer() {
         runBlocking {
             mockResponseFromJson("/MovieItemsListResponse.json")
-            val movieListItemResponse = webClient.getMovieList()
+            val movieListItemResponse = webClient.fetchMovieList()
             val webServiceResponse = WebServiceResponse.OnSuccess(movieListItemResponse)
             val movieList = webServiceResponse.data.body()?.items
             Assert.assertEquals(movieList?.get(0)?.id, "tt1745960")

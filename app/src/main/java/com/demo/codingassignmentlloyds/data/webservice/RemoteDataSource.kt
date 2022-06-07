@@ -3,9 +3,6 @@ package com.demo.codingassignmentlloyds.data.webservice
 import com.demo.codingassignmentlloyds.data.model.MovieItemsListResponse
 import com.demo.codingassignmentlloyds.data.model.WebServiceResponse
 import com.demo.codingassignmentlloyds.dispatcher.CoroutinesDispatchers
-import com.demo.codingassignmentlloyds.dispatcher.CustomCoroutinesDispatchers
-import kotlinx.coroutines.CoroutineDispatcher
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOn

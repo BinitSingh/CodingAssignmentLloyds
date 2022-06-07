@@ -4,7 +4,6 @@ import android.content.Context
 import androidx.recyclerview.widget.RecyclerView
 import com.demo.codingassignmentlloyds.R
 import com.demo.codingassignmentlloyds.databinding.ItemMovieBinding
-import com.demo.codingassignmentlloyds.databinding.ItemMovieNewBinding
 import com.demo.codingassignmentlloyds.domain.datamodel.Movie
 import com.demo.codingassignmentlloyds.utility.loadImageOrDefault
 

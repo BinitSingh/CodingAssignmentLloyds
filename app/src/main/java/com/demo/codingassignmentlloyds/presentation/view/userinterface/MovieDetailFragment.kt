@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import com.demo.codingassignmentlloyds.databinding.FragmentMovieDetailBinding
 import com.demo.codingassignmentlloyds.domain.datamodel.Movie
+import com.demo.codingassignmentlloyds.utility.Constants.MOVIE
 import com.demo.codingassignmentlloyds.utility.loadImageOrDefault
 
 class MovieDetailFragment : BaseFragment() {

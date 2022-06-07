@@ -1,17 +1,19 @@
 package com.demo.codingassignmentlloyds.injection
 
 import com.demo.codingassignmentlloyds.BuildConfig
-import com.demo.codingassignmentlloyds.data.webservice.RemoteDataSource
 import com.demo.codingassignmentlloyds.data.webservice.IDataSource
 import com.demo.codingassignmentlloyds.data.webservice.MovieApi
+import com.demo.codingassignmentlloyds.data.webservice.RemoteDataSource
 import com.demo.codingassignmentlloyds.dispatcher.CoroutinesDispatchers
 import com.demo.codingassignmentlloyds.dispatcher.CustomCoroutinesDispatchers
+import com.demo.codingassignmentlloyds.utility.Constants.CALL_TIMEOUT
+import com.demo.codingassignmentlloyds.utility.Constants.CONNECT_TIMEOUT
+import com.demo.codingassignmentlloyds.utility.Constants.READ_TIMEOUT
+import com.demo.codingassignmentlloyds.utility.Constants.WRITE_TIMEOUT
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
-import kotlinx.coroutines.CoroutineDispatcher
-import kotlinx.coroutines.Dispatchers
 import okhttp3.Interceptor
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
@@ -28,31 +30,21 @@ object NetworkModule {
         level = HttpLoggingInterceptor.Level.BODY
     }
 
-    /**
-     * Provides an [OkHttpClient]
-     * @param loggingInterceptor [HttpLoggingInterceptor] instance
-     */
     @Provides
     fun provideOKHttpClient(interceptor: Interceptor) = OkHttpClient().apply {
         OkHttpClient.Builder().apply {
-            callTimeout(40, SECONDS)
-            connectTimeout(40, SECONDS)
-            readTimeout(40, SECONDS)
-            writeTimeout(40, SECONDS)
+            callTimeout(CALL_TIMEOUT, SECONDS)
+            connectTimeout(CONNECT_TIMEOUT, SECONDS)
+            readTimeout(READ_TIMEOUT, SECONDS)
+            writeTimeout(WRITE_TIMEOUT, SECONDS)
             addInterceptor(interceptor)
             build()
         }
     }
 
-    /**
-     * Returns a [MoshiConverterFactory] instance
-     */
     @Provides
     fun provideMoshiConverterFactory(): MoshiConverterFactory = MoshiConverterFactory.create()
 
-    /**
-     * Returns an instance of the [MovieApi] interface for the retrofit class
-     */
     @Provides
     fun provideRetrofitClient(
         okHttpClient: OkHttpClient,
@@ -71,9 +63,6 @@ object NetworkModule {
     @Provides
     fun provideCouroutineDispatcher(): CoroutinesDispatchers = CustomCoroutinesDispatchers()
 
-    /**
-     * Returns a [IDataSource] impl -> ApiCallsImpl
-     */
     @Provides
     fun provideRemoteDataSource(retrofit: MovieApi, dispatcher: CoroutinesDispatchers): IDataSource
     = RemoteDataSource(retrofit, dispatcher)

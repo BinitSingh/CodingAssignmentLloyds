@@ -4,7 +4,6 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.demo.codingassignmentlloyds.databinding.ItemMovieBinding
-import com.demo.codingassignmentlloyds.databinding.ItemMovieNewBinding
 import com.demo.codingassignmentlloyds.domain.datamodel.Movie
 import com.demo.codingassignmentlloyds.presentation.view.viewholder.MovieViewHolder
 import javax.inject.Inject

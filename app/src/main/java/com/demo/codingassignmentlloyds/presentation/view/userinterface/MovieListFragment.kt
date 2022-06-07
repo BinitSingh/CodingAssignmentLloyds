@@ -14,13 +14,13 @@ import com.demo.codingassignmentlloyds.presentation.view.adapter.MovieClickListe
 import com.demo.codingassignmentlloyds.presentation.view.adapter.MovieListAdaptor
 import com.demo.codingassignmentlloyds.presentation.viewmodel.MovieListViewModel
 import com.demo.codingassignmentlloyds.presentation.ViewState
+import com.demo.codingassignmentlloyds.utility.Constants.MOVIE
 import com.demo.codingassignmentlloyds.utility.ItemDecoration
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collect
 import javax.inject.Inject
 
 
-const val MOVIE = "movie"
 @AndroidEntryPoint
 class MovieListFragment : BaseFragment() {
     private lateinit var binding: FragmentMovieListBinding
@@ -57,16 +57,16 @@ class MovieListFragment : BaseFragment() {
             lifecycleScope.launchWhenStarted {
                 viewModel.getViewStateFlow().collect { viewState ->
                     when (viewState) {
-                        is ViewState.Loading -> {
+                        is ViewState.Loading ->
                             showHideProgressBar(progressBar, viewState.isLoading)
-                        }
+
                         is ViewState.Failure -> {
                             viewState.throwable.message?.let {
                                 Toast.makeText(context, it, Toast.LENGTH_SHORT).show()
                             }
                         }
                         is ViewState.Success -> {
-                            with(movieAdaptor){
+                            with(movieAdaptor) {
                                 rvMovie.adapter = this
                                 listner = itemClickListener
                                 dataSet = viewState.result

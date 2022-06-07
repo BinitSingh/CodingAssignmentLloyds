@@ -3,9 +3,9 @@ package com.demo.codingassignmentlloyds.domain.usecase
 import com.demo.codingassignmentlloyds.data.model.MovieItemsListResponse
 import com.demo.codingassignmentlloyds.data.model.WebServiceResponse
 import com.demo.codingassignmentlloyds.dispatcher.CoroutinesDispatchers
+import com.demo.codingassignmentlloyds.domain.EntityMapper
 import com.demo.codingassignmentlloyds.domain.datamodel.Movie
 import com.demo.codingassignmentlloyds.domain.repository.IMovieRepository
-import com.demo.codingassignmentlloyds.domain.EntityMapper
 import kotlinx.coroutines.flow.*
 import javax.inject.Inject
 
@@ -15,8 +15,8 @@ class MovieListUseCase @Inject constructor (
     private val entityMapper: EntityMapper<MovieItemsListResponse, List<Movie>>
     ): IUseCase<Any?, List<Movie>> {
 
-    override suspend fun fetchData(input: Any?): Flow<WebServiceResponse<List<Movie>>> {
-        return  flow {
+    override suspend fun fetchData(input: Any?): Flow<WebServiceResponse<List<Movie>>> =
+          flow {
             val webServiceResponse = repository.getMovieList()
             webServiceResponse.map { response ->
                 when(response) {
@@ -32,5 +32,5 @@ class MovieListUseCase @Inject constructor (
             }
             return@flow
         }.flowOn(dispatcher.computation())
-    }
+
 }
