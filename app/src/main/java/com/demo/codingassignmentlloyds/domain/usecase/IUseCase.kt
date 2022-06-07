@@ -1,10 +1,10 @@
 package com.demo.codingassignmentlloyds.domain.usecase
 
-import com.demo.codingassignmentlloyds.data.model.WebServiceResponse
+import com.demo.codingassignmentlloyds.domain.datamodel.Result
 import kotlinx.coroutines.flow.Flow
 
 interface IUseCase<in I : Any?, out T : Any>  {
     suspend  fun fetchData(
         input: I? = null
-    ): Flow<WebServiceResponse<T>>
+    ): Flow<Result<T>>
 }

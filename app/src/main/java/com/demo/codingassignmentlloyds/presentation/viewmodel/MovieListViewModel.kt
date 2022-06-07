@@ -25,12 +25,12 @@ class MovieListViewModel @Inject constructor(
     fun fetchMovieList() {
         viewModelScope.launch {
             val movieListWebServiceResponse = useCase.fetchData()
-            getViewStateFlowFromWebServiceResponse(
+            getViewStateFlowFromResponse(
                 movieListWebServiceResponse
             ).collect { viewState ->
                 uiStateFlow.value = when (viewState) {
-                    is Loading,
-                    is Failure -> viewState
+                    is Loading -> viewState
+                    is Failure -> Failure(viewState.throwable)
                     is Success -> Success(viewState.result)
                 }
             }

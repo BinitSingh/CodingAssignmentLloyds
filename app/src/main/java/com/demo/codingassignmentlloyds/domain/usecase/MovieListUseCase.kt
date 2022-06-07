@@ -1,9 +1,7 @@
 package com.demo.codingassignmentlloyds.domain.usecase
 
-import com.demo.codingassignmentlloyds.data.model.MovieItemsListResponse
-import com.demo.codingassignmentlloyds.data.model.WebServiceResponse
+import com.demo.codingassignmentlloyds.domain.datamodel.Result
 import com.demo.codingassignmentlloyds.dispatcher.CoroutinesDispatchers
-import com.demo.codingassignmentlloyds.domain.EntityMapper
 import com.demo.codingassignmentlloyds.domain.datamodel.Movie
 import com.demo.codingassignmentlloyds.domain.repository.IMovieRepository
 import kotlinx.coroutines.flow.*
@@ -11,20 +9,19 @@ import javax.inject.Inject
 
 class MovieListUseCase @Inject constructor (
     private val repository: IMovieRepository,
-    private val dispatcher: CoroutinesDispatchers,
-    private val entityMapper: EntityMapper<MovieItemsListResponse, List<Movie>>
+    private val dispatcher: CoroutinesDispatchers
     ): IUseCase<Any?, List<Movie>> {
 
-    override suspend fun fetchData(input: Any?): Flow<WebServiceResponse<List<Movie>>> =
+    override suspend fun fetchData(input: Any?): Flow<Result<List<Movie>>> =
           flow {
-            val webServiceResponse = repository.getMovieList()
-            webServiceResponse.map { response ->
-                when(response) {
-                    is WebServiceResponse.OnSuccess -> {
-                        WebServiceResponse.OnSuccess(entityMapper.transformFrom(response.data))
+            val response = repository.getMovieList()
+              response.map {
+                when(it) {
+                    is Result.Success -> {
+                        Result.Success(it.data)
                     }
-                    is WebServiceResponse.OnFailure -> {
-                        WebServiceResponse.OnFailure(response.throwable)
+                    is Result.Failure -> {
+                        Result.Failure(it.throwable)
                     }
                 }
             }.collect {
