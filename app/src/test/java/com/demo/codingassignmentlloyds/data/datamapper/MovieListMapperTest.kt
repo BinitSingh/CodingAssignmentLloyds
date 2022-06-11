@@ -2,6 +2,7 @@ package com.demo.codingassignmentlloyds.data.datamapper
 
 import com.demo.codingassignmentlloyds.MockFileReader
 import com.demo.codingassignmentlloyds.data.model.MovieItemsListResponse
+import com.demo.codingassignmentlloyds.domain.datamodel.Movie
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
 import org.junit.After

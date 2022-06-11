@@ -9,8 +9,8 @@
 //import com.demo.codingassignmentlloyds.data.repository.MovieRepositoryImpl
 //import com.demo.codingassignmentlloyds.data.webservice.MovieApi
 //import com.demo.codingassignmentlloyds.domain.datamodel.Movie
-//import com.demo.codingassignmentlloyds.domain.datamodel.Result
 //import com.demo.codingassignmentlloyds.domain.usecase.MovieListUseCase
+//import com.demo.codingassignmentlloyds.domain.datamodel.Result
 //import com.demo.codingassignmentlloyds.presentation.ViewState
 //import com.squareup.moshi.Moshi
 //import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
@@ -35,7 +35,7 @@
 //
 //@RunWith(MockitoJUnitRunner::class)
 //@ExperimentalCoroutinesApi
-//class MovieListViewModalTest {
+//class MovieListViewModalTest2 {
 //
 //    @get:Rule
 //    val testInstantTaskExecutorRule: TestRule = InstantTaskExecutorRule()
@@ -45,48 +45,32 @@
 //    @Mock
 //    private lateinit var useCase: MovieListUseCase
 //
-//    @Mock
-//    private lateinit var apiHelper: MovieApi
+//    private lateinit var viewModel: MovieListViewModel
 //
-//    @Mock
-//    private lateinit var repository: MovieRepositoryImpl
+////    @Mock
+////    private lateinit var apiHelper: MovieApi
+////
+////    @Mock
+////    private lateinit var repository: MovieRepositoryImpl
+//    private val testDispatcher = TestCoroutineDispatcher()
 //
 //    @Before
 //    fun setUp(){
 //        MockitoAnnotations.initMocks(this)
+//        viewModel = MovieListViewModel(useCase, testDispatcher)
 //    }
 //
-//    private val testDispatcher = TestCoroutineDispatcher()
+//
 //    @Test
 //    fun fetchMovieListTest() = runBlocking {
-//        val viewModel = MovieListViewModel(useCase, testDispatcher)
-//
-//        val fileName = "/MovieItemsListResponse.json"
-//        val json = MockFileReader().getResponseFromJson(fileName)
-//        val movieItemsListResponse = Moshi.Builder().add(KotlinJsonAdapterFactory()).build()
-//            .adapter(MovieItemsListResponse::class.java).fromJson(json)
-//        val movieList =  MovieListMapper().transformFrom(movieItemsListResponse!!)
-//        val channel = Channel<Result<List<Movie>>>()
-//        val flow = channel.consumeAsFlow()
-//        Mockito.`when`(useCase.fetchData()).thenReturn(flow )
-//        val job = launch {
-//            channel.send(Result.Success(movieList))
-//        }
-//        viewModel.fetchMovieList()
-//        viewModel.getViewStateFlow().collect {
-//            when (it) {
-//                is ViewState.Loading -> {
-//                    Assert.assertEquals(it.isLoading , true)
-//                }
-//                is ViewState.Success -> {
-//                    Assert.assertEquals(it.result.size , 100)
-//                }
+//        Mockito.`when`(useCase.fetchData()).thenReturn(
+//            flow {
+//                emit(Result.Success(emptyList<Movie>()) )
 //            }
-//        }
-//        job.cancel()
+//        )
+//        viewModel.fetchMovieList()
+//        Assert.assertEquals(
+//            ViewState.Success(emptyList<Movie>()), viewModel.getViewStateFlow().value
+//        )
 //    }
-//
-//
-//    val stateFlow = MutableStateFlow(ViewState.Success(emptyList<Movie>()))
-//
 //}

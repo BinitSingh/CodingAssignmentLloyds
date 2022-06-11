@@ -15,6 +15,7 @@ import com.demo.codingassignmentlloyds.presentation.view.adapter.MovieListAdapto
 import com.demo.codingassignmentlloyds.presentation.viewmodel.MovieListViewModel
 import com.demo.codingassignmentlloyds.presentation.ViewState
 import com.demo.codingassignmentlloyds.utility.Constants.MOVIE
+import com.demo.codingassignmentlloyds.utility.EspressoIdlingResource
 import com.demo.codingassignmentlloyds.utility.ItemDecoration
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collect
@@ -25,16 +26,15 @@ import javax.inject.Inject
 class MovieListFragment : BaseFragment() {
     private lateinit var binding: FragmentMovieListBinding
     private val viewModel: MovieListViewModel by viewModels()
-
     @Inject
     lateinit var movieAdaptor: MovieListAdaptor
-
     private val itemClickListener: MovieClickListener = { movie ->
         findNavController().navigate(
             R.id.action_show_moviedetail,
             Bundle().apply {
                 putParcelable(MOVIE, movie)
-            })
+            }
+        )
     }
 
     override fun onCreateView(
@@ -48,6 +48,7 @@ class MovieListFragment : BaseFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        EspressoIdlingResource.increment()
         viewModel.fetchMovieList()
         with(binding){
             rvMovie.addItemDecoration(
@@ -56,6 +57,7 @@ class MovieListFragment : BaseFragment() {
 
             lifecycleScope.launchWhenStarted {
                 viewModel.getViewStateFlow().collect { viewState ->
+                    EspressoIdlingResource.decrement()
                     when (viewState) {
                         is ViewState.Loading ->
                             showHideProgressBar(progressBar, viewState.isLoading)
@@ -66,10 +68,12 @@ class MovieListFragment : BaseFragment() {
                             }
                         }
                         is ViewState.Success -> {
-                            with(movieAdaptor) {
-                                rvMovie.adapter = this
-                                listner = itemClickListener
-                                dataSet = viewState.result
+                            if(this@MovieListFragment::movieAdaptor.isInitialized) {
+                                with(movieAdaptor) {
+                                    rvMovie.adapter = this
+                                    listner = itemClickListener
+                                    dataSet = viewState.result
+                                }
                             }
                         }
                     }

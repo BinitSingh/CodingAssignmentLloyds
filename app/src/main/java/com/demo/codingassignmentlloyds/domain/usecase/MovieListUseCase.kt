@@ -1,15 +1,15 @@
 package com.demo.codingassignmentlloyds.domain.usecase
 
 import com.demo.codingassignmentlloyds.domain.datamodel.Result
-import com.demo.codingassignmentlloyds.dispatcher.CoroutinesDispatchers
 import com.demo.codingassignmentlloyds.domain.datamodel.Movie
 import com.demo.codingassignmentlloyds.domain.repository.IMovieRepository
+import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.flow.*
 import javax.inject.Inject
 
 class MovieListUseCase @Inject constructor (
     private val repository: IMovieRepository,
-    private val dispatcher: CoroutinesDispatchers
+    private val dispatcher: CoroutineDispatcher
     ): IUseCase<Any?, List<Movie>> {
 
     override suspend fun fetchData(input: Any?): Flow<Result<List<Movie>>> =
@@ -28,6 +28,6 @@ class MovieListUseCase @Inject constructor (
                 emit(it)
             }
             return@flow
-        }.flowOn(dispatcher.computation())
+        }.flowOn(dispatcher)
 
 }

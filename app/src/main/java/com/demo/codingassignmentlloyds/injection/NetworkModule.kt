@@ -4,8 +4,8 @@ import com.demo.codingassignmentlloyds.BuildConfig
 import com.demo.codingassignmentlloyds.data.webservice.IDataSource
 import com.demo.codingassignmentlloyds.data.webservice.MovieApi
 import com.demo.codingassignmentlloyds.data.webservice.RemoteDataSource
-import com.demo.codingassignmentlloyds.dispatcher.CoroutinesDispatchers
-import com.demo.codingassignmentlloyds.dispatcher.CustomCoroutinesDispatchers
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
 import com.demo.codingassignmentlloyds.utility.Constants.CALL_TIMEOUT
 import com.demo.codingassignmentlloyds.utility.Constants.CONNECT_TIMEOUT
 import com.demo.codingassignmentlloyds.utility.Constants.READ_TIMEOUT
@@ -14,6 +14,7 @@ import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
+import kotlinx.coroutines.CoroutineDispatcher
 import okhttp3.Interceptor
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
@@ -60,10 +61,18 @@ object NetworkModule {
     fun provideMovieApi(retrofit: Retrofit): MovieApi =
         retrofit.create(MovieApi::class.java)
 
+    @CoroutineScopeIO
     @Provides
-    fun provideCouroutineDispatcher(): CoroutinesDispatchers = CustomCoroutinesDispatchers()
+    fun provideCoroutineDispatcherIO() = Dispatchers.IO
+
+    @CoroutineScopeDefault
+    @Provides
+    fun provideCoroutineDispatcherDefault() = Dispatchers.Default
 
     @Provides
-    fun provideRemoteDataSource(retrofit: MovieApi, dispatcher: CoroutinesDispatchers): IDataSource
-    = RemoteDataSource(retrofit, dispatcher)
+    fun provideRemoteDataSource(
+        retrofit: MovieApi,
+        @CoroutineScopeIO
+        dispatcher: CoroutineDispatcher
+    ): IDataSource = RemoteDataSource(retrofit,dispatcher)
 }
