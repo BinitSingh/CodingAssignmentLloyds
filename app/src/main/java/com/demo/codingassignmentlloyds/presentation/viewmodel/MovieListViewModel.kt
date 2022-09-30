@@ -22,16 +22,16 @@ class MovieListViewModel @Inject constructor(
     dispatchers: CoroutineDispatcher
 ) : BaseViewModel(dispatchers) {
 
-    private val uiStateFlow =
+    private val _uiStateFlow =
         MutableStateFlow<ViewState<List<Movie>>>(Loading(true))
 
     fun fetchMovieList() {
         viewModelScope.launch {
-            val movieListWebServiceResponse = useCase.fetchData()
+            val movieListWebServiceResponse = useCase()
             getViewStateFlowFromResponse(
                 movieListWebServiceResponse
             ).collect { viewState ->
-                uiStateFlow.value = when (viewState) {
+                _uiStateFlow.value = when (viewState) {
                     is Loading -> viewState
                     is Failure -> Failure(viewState.throwable)
                     is Success -> Success(viewState.result)
@@ -40,5 +40,5 @@ class MovieListViewModel @Inject constructor(
         }
     }
 
-    fun getViewStateFlow(): StateFlow<ViewState<List<Movie>>> = uiStateFlow
+    fun getViewStateFlow(): StateFlow<ViewState<List<Movie>>> = _uiStateFlow
 }

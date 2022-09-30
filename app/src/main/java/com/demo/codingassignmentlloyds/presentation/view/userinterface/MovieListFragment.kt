@@ -28,14 +28,6 @@ class MovieListFragment : BaseFragment() {
     private val viewModel: MovieListViewModel by viewModels()
     @Inject
     lateinit var movieAdaptor: MovieListAdaptor
-    private val itemClickListener: MovieClickListener = { movie ->
-        findNavController().navigate(
-            R.id.action_show_moviedetail,
-            Bundle().apply {
-                putParcelable(MOVIE, movie)
-            }
-        )
-    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -80,6 +72,15 @@ class MovieListFragment : BaseFragment() {
                 }
             }
         }
+    }
+
+    private val itemClickListener: MovieClickListener = { movie ->
+        findNavController().navigate(
+            R.id.action_show_moviedetail,
+            Bundle().apply {
+                putParcelable(MOVIE, movie)
+            }
+        )
     }
 
 }

@@ -22,13 +22,13 @@ hilt.hiltCompiler = "androidx.hilt:hilt-compiler:$hiltCompiler"
 ext.hilt = hilt
 // Networking - Retrofit + Moshi converter
 def network = [:]
-hilt.retrofit = "com.squareup.retrofit2:retrofit:$retrofit"
-hilt.converterMoshi = "com.squareup.retrofit2:converter-moshi:$converterMoshi"
-hilt.moshiKotlin = "com.squareup.moshi:moshi-kotlin:$moshiKotlin"
-hilt.moshiKotlinCodegen = "com.squareup.moshi:moshi-kotlin-codegen:$moshiKotlinCodegen"
-hilt.okhttp = "com.squareup.okhttp3:okhttp:$okhttp"
-hilt.loggingInterceptor = "com.squareup.okhttp3:logging-interceptor:$loggingInterceptor"
-hilt.kotlinCoroutinesAdapter = "com.jakewharton.retrofit:retrofit2-kotlin-coroutines-adapter:$kotlinCoroutinesAdapter"
+network.retrofit = "com.squareup.retrofit2:retrofit:$retrofit"
+network.converterMoshi = "com.squareup.retrofit2:converter-moshi:$converterMoshi"
+network.moshiKotlin = "com.squareup.moshi:moshi-kotlin:$moshiKotlin"
+network.moshiKotlinCodegen = "com.squareup.moshi:moshi-kotlin-codegen:$moshiKotlinCodegen"
+network.okhttp = "com.squareup.okhttp3:okhttp:$okhttp"
+network.loggingInterceptor = "com.squareup.okhttp3:logging-interceptor:$loggingInterceptor"
+network.kotlinCoroutinesAdapter = "com.jakewharton.retrofit:retrofit2-kotlin-coroutines-adapter:$kotlinCoroutinesAdapter"
 ext.network = network
 // Glide
 def glidelib = [:]
@@ -56,11 +56,3 @@ uiTesting.espressoContrib = "androidx.test.espresso:espresso-contrib:$espressoCo
 uiTesting.navigationTesting = "androidx.navigation:navigation-testing:$navigationTesting"
 //uiTesting.fragmentUITesting = "androidx.fragment:fragment-testing:$fragmentUiTesting"
 ext.uiTesting = uiTesting
-
-
-//expresso
-//implementation ''
-//androidTestImplementation ''
-//androidTestImplementation ''
-//debugImplementation ""
-//androidTestImplementation ""

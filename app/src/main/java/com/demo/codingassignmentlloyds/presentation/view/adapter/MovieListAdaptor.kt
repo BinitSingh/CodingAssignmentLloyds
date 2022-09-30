@@ -13,7 +13,6 @@ typealias MovieClickListener = (Movie) -> Unit
 class MovieListAdaptor @Inject constructor() : RecyclerView.Adapter<MovieViewHolder>() {
 
     lateinit var listner: MovieClickListener
-
     var dataSet: List<Movie> by Delegates.observable(emptyList()) { _, _, _ ->
         notifyDataSetChanged()
     }

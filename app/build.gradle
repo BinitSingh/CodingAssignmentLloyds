@@ -59,13 +59,13 @@ dependencies {
     implementation androidX.avigationUIKtx
 
     // Networking - Retrofit + Moshi converter
-    implementation hilt.retrofit
-    implementation hilt.converterMoshi
-    implementation hilt.moshiKotlin
-    kapt hilt.moshiKotlinCodegen
-    implementation hilt.okhttp
-    implementation hilt.loggingInterceptor
-    implementation hilt.kotlinCoroutinesAdapter
+    implementation network.retrofit
+    implementation network.converterMoshi
+    implementation network.moshiKotlin
+    kapt network.moshiKotlinCodegen
+    implementation network.okhttp
+    implementation network.loggingInterceptor
+    implementation network.kotlinCoroutinesAdapter
     //Glide
     implementation glidelib.glide
     implementation glidelib.preferenceKtx

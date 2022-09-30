@@ -12,7 +12,7 @@ class MovieListUseCase @Inject constructor (
     private val dispatcher: CoroutineDispatcher
     ): IUseCase<Any?, List<Movie>> {
 
-    override suspend fun fetchData(input: Any?): Flow<Result<List<Movie>>> =
+    override suspend operator fun invoke(input: Any?): Flow<Result<List<Movie>>> =
           flow {
             val response = repository.getMovieList()
               response.map {

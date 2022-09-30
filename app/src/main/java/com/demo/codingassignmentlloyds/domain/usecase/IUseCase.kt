@@ -4,7 +4,8 @@ import com.demo.codingassignmentlloyds.domain.datamodel.Result
 import kotlinx.coroutines.flow.Flow
 
 interface IUseCase<in I : Any?, out T : Any>  {
-    suspend  fun fetchData(
+
+    suspend  fun invoke(
         input: I? = null
     ): Flow<Result<T>>
 }
