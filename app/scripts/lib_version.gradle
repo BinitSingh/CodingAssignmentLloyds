@@ -8,6 +8,7 @@ ext {
     constraintlayout = '2.1.4'
     fragmentKtx = '1.4.1'
     navigationFragmentKtx = '2.4.2'
+    runTimeLifecycle = '2.4.0'
     navigationUIKtx = '2.4.2'
     hiltAdroid = '2.38.1'
     hiltGoogleCompiler = '2.38.1'

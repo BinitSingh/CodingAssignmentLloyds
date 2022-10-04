@@ -57,7 +57,7 @@ dependencies {
     implementation androidX.fragmentKtx
     implementation androidX.navigationFragmentKtx
     implementation androidX.avigationUIKtx
-
+    implementation androidX.lifecycle
     // Networking - Retrofit + Moshi converter
     implementation network.retrofit
     implementation network.converterMoshi

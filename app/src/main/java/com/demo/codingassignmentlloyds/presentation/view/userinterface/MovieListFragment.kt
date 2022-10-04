@@ -6,7 +6,9 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
 import com.demo.codingassignmentlloyds.R
 import com.demo.codingassignmentlloyds.databinding.FragmentMovieListBinding
@@ -19,6 +21,7 @@ import com.demo.codingassignmentlloyds.utility.EspressoIdlingResource
 import com.demo.codingassignmentlloyds.utility.ItemDecoration
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 
@@ -46,25 +49,26 @@ class MovieListFragment : BaseFragment() {
             rvMovie.addItemDecoration(
                 ItemDecoration(resources.getDimension(R.dimen.dimen_16dp).toInt())
             )
+            lifecycleScope.launch {
+                repeatOnLifecycle(Lifecycle.State.STARTED) {
+                    viewModel.getViewStateFlow().collect { viewState ->
+                        EspressoIdlingResource.decrement()
+                        when (viewState) {
+                            is ViewState.Loading ->
+                                showHideProgressBar(progressBar, viewState.isLoading)
 
-            lifecycleScope.launchWhenStarted {
-                viewModel.getViewStateFlow().collect { viewState ->
-                    EspressoIdlingResource.decrement()
-                    when (viewState) {
-                        is ViewState.Loading ->
-                            showHideProgressBar(progressBar, viewState.isLoading)
-
-                        is ViewState.Failure -> {
-                            viewState.throwable.message?.let {
-                                Toast.makeText(context, it, Toast.LENGTH_SHORT).show()
+                            is ViewState.Failure -> {
+                                viewState.throwable.message?.let {
+                                    Toast.makeText(context, it, Toast.LENGTH_SHORT).show()
+                                }
                             }
-                        }
-                        is ViewState.Success -> {
-                            if(this@MovieListFragment::movieAdaptor.isInitialized) {
-                                with(movieAdaptor) {
-                                    rvMovie.adapter = this
-                                    listner = itemClickListener
-                                    dataSet = viewState.result
+                            is ViewState.Success -> {
+                                if(this@MovieListFragment::movieAdaptor.isInitialized) {
+                                    with(movieAdaptor) {
+                                        rvMovie.adapter = this
+                                        listner = itemClickListener
+                                        dataSet = viewState.result
+                                    }
                                 }
                             }
                         }

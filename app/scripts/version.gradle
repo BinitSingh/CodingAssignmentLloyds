@@ -12,6 +12,7 @@ androidX.constraintlayout = "androidx.constraintlayout:constraintlayout:$constra
 androidX.fragmentKtx = "androidx.fragment:fragment-ktx:$fragmentKtx"
 androidX.navigationFragmentKtx = "androidx.navigation:navigation-fragment-ktx:$navigationFragmentKtx"
 androidX.avigationUIKtx = "androidx.navigation:navigation-ui-ktx:$navigationUIKtx"
+androidX.lifecycle = "androidx.lifecycle:lifecycle-runtime-ktx:$runTimeLifecycle"
 ext.androidX = androidX
 // DI - Hilt
 def hilt= [:]
